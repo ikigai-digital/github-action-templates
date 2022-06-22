@@ -1,0 +1,29 @@
+name: 'Print Out GHA Full Context'
+on:
+  pull_request:
+    types: [labeled, unlabeled, opened, edited, synchronize, closed]
+jobs:
+  debug-print:
+    name: "Prints all context values"
+    runs-on: ubuntu-latest
+    steps:
+      # Checks the PR title has a Jira
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
+      - name: Dump job context
+        run: echo '${{ toJSON(job) }}'
+      - name: Dump steps context
+        run: echo '${{ toJSON(steps) }}'
+      - name: Dump runner context
+        run: echo '${{ toJSON(runner) }}'
+      - name: Dump strategy context
+        run: echo '${{ toJSON(strategy) }}'
+      - name: Dump matrix context
+        run: echo '${{ toJSON(matrix) }}'
+      - name: Sha
+        run: echo 'sha ${{ github.sha }}'
+      - name: PR Owner
+        run: echo 'actor ${{ github.actor }}'
+      - name: Head ref
+        run: echo 'actor ${{ github.head_ref }}'
